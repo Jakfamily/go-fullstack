@@ -2,6 +2,8 @@ const express = require("express"); // Importation du module Express
 
 const app = express();
 
+app.use(express.json()); // Transformation du corps de la requête en objet JS utilisableb
+
 // Middleware général appliqué à toutes les routes pour ajouter des headers aux requêtes
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // Accès à l'API depuis n'importe quelle origine
@@ -16,8 +18,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// Middleware général appliqué à toutes les routes pour ajouter des headers aux requêtes
-app.use("/api/stuff", (req, res, next) => {
+app.post("/api/stuff", (req, res, next) => {
+  console.log(req.body);
+  res.status(201).json({
+    // Réponse à la requête 201 creation de ressource
+    message: "Objet créé !",
+  });
+});
+// Middleware pour répondre aux requêtes faites à /api/stuff
+app.get("/api/stuff", (req, res, next) => {
   const stuff = [
     {
       _id: "oeihfzeoi",
