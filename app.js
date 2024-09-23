@@ -1,4 +1,18 @@
+require("dotenv").config();
 const express = require("express"); // Importation du module Express
+const mongoose = require("mongoose"); // Importation du module Mongoose
+const uri = process.env.MONGODB_URI; // Récupération de l'URI de connexion à la base de données MongoDB
+// Connexion à la base de données MongoDB avec Mongoose
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.log("Connexion à MongoDB réussie");
+  })
+  .catch((error) => {
+    console.error("Erreur de connexion à MongoDB :", error);
+  });
+
+const Thing = require("./models/thing");
 
 const app = express();
 
@@ -19,12 +33,16 @@ app.use((req, res, next) => {
 });
 
 app.post("/api/stuff", (req, res, next) => {
-  console.log(req.body);
-  res.status(201).json({
-    // Réponse à la requête 201 creation de ressource
-    message: "Objet créé !",
+  delete req.body._id; // Suppression de l'id envoyé par le front-end, car il est généré automatiquement par MongoDB
+  const thing = new Thing({
+    ...req.body, // Récupération de tous les champs de la requête via le spread operator
   });
+  thing
+    .save() // Enregistrement de l'objet dans la base de données
+    .then(() => res.status(201).json({ message: "Objet enregistré !" })) // Réponse de réussite
+    .catch((error) => res.status(400).json({ error })); // Réponse d'erreur
 });
+
 // Middleware pour répondre aux requêtes faites à /api/stuff
 app.get("/api/stuff", (req, res, next) => {
   const stuff = [
