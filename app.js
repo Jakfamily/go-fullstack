@@ -45,26 +45,26 @@ app.post("/api/stuff", (req, res, next) => {
 
 // Middleware pour répondre aux requêtes faites à /api/stuff
 app.get("/api/stuff", (req, res, next) => {
-  const stuff = [
-    {
-      _id: "oeihfzeoi",
-      title: "Mon premier objet",
-      description: "Les infos de mon premier objet",
-      imageUrl:
-        "https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg",
-      price: 4900,
-      userId: "qsomihvqios",
-    },
-    {
-      _id: "oeihfzeomoihi",
-      title: "Mon deuxième objet",
-      description: "Les infos de mon deuxième objet",
-      imageUrl:
-        "https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg",
-      price: 2900,
-      userId: "qsomihvqios",
-    },
-  ];
-  res.status(200).json(stuff);
+  Thing.find() // Récupération de tous les objets dans la base de données
+    .then((things) => res.status(200).json(things)) // Réponse de réussite
+    .catch((error) => res.status(400).json({ error })); // Réponse d'erreur
 });
 module.exports = app; // Exportation de l'application pour l'utiliser dans d'autres fichiers
+
+app.get("/api/stuff/:id", (req, res, next) => {
+  Thing.findOne({ _id: req.params.id }) // Récupération de l'objet correspondant à l'id fourni
+    .then((thing) => res.status(200).json(thing)) // Réponse de réussite
+    .catch((error) => res.status(404).json({ error })); // Réponse d'erreur
+});
+
+app.put("/api/stuff/:id", (req, res, next) => {
+  Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id }) // Mise à jour de l'objet correspondant à l'id fourni
+    .then(() => res.status(200).json({ message: "Objet modifié !" })) // Réponse de réussite
+    .catch((error) => res.status(400).json({ error })); // Réponse d'erreur
+});
+
+app.delete("/api/stuff/:id", (req, res, next) => {
+  Thing.deleteOne({ _id: req.params.id }) // Suppression de l'objet correspondant à l'id fourni
+    .then(() => res.status(200).json({ message: "Objet supprimé !" })) // Réponse de réussite
+    .catch((error) => res.status(400).json({ error })); // Réponse d'erreur
+});
