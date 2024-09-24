@@ -1,4 +1,4 @@
-// logique métier pour les routes stuff
+// liens entre la logique metier et les routes  de lapi
 const Thing = require("../models/thing");
 
 exports.createThing = (req, res, next) => {

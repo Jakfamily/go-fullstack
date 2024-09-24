@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const stuffRoutes = require("./routes/stuff");
+const userRoutes = require("./routes/user");
 require("dotenv").config();
 
 const uri = process.env.MONGODB_URI;
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json()); // Middleware pour parser les requêtes en JSON
-app.use("/api/stuff", stuffRoutes); // Déclaration des routes
+app.use("/api/stuff", stuffRoutes);
+app.use("/api/auth", userRoutes);
 
 module.exports = app;
