@@ -1,5 +1,5 @@
 
-# projet Backend - API REST avec Node.js, Express et MongoDB dans le cadre du cours "Passez au Full Stack avec Node.js, Express et MongoDB" d'OpenClassrooms.
+# Projet Backend - API REST avec Node.js, Express et MongoDB dans le cadre du cours "Passez au Full Stack avec Node.js, Express et MongoDB" d'OpenClassrooms.
 
 ## Description
 
