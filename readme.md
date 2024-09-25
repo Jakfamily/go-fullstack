@@ -69,7 +69,7 @@ Voici quelques-unes des routes disponibles dans l'API :
 
 ## Auteurs
 
-- **Jean-Baptiste** - *Développeur* - [Votre profil LinkedIn]([https://www.linkedin.com/in/votreprofil](https://www.linkedin.com/in/faria-jean-baptiste/))
+- **Jean-Baptiste** - *Développeur* - [Mon profil LinkedIn](https://www.linkedin.com/in/faria-jean-baptiste/)
 
 ## License
 
