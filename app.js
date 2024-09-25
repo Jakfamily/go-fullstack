@@ -1,8 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const stuffRoutes = require("./routes/stuff");
 const userRoutes = require("./routes/user");
-require("dotenv").config();
+const path = require("path");
 
 const uri = process.env.MONGODB_URI;
 
@@ -12,6 +13,7 @@ mongoose
   .catch((error) => console.error("Erreur de connexion à MongoDB :", error));
 
 const app = express();
+app.use(express.json()); // Middleware pour parser les requêtes en JSON
 
 // Middleware général appliqué à toutes les routes pour ajouter des headers aux requêtes
 app.use((req, res, next) => {
@@ -27,8 +29,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json()); // Middleware pour parser les requêtes en JSON
 app.use("/api/stuff", stuffRoutes);
 app.use("/api/auth", userRoutes);
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app;
